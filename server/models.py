@@ -14,7 +14,7 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
-    articles = db.relationship('Article', backref='user')
+    articles = db.relationship('Article', backref='user', cascade='all, delete-orphan')
     categories = association_proxy('articles', 'category')
 
     @validates('password')
@@ -37,6 +37,15 @@ class User(db.Model):
             "name": self.username,
             "username": self.username,
             "password": self.password
+        }
+    
+    def to_dict_2(self):
+        return {
+            "id": self.id,
+            "name": self.username,
+            "username": self.username,
+            "password": self.password,
+            "articles": [article.to_dict() for article in self.articles]
         }
 
 class Article(db.Model):
