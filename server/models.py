@@ -19,7 +19,7 @@ class User(db.Model):
 
     @validates('password')
     def validate(self, key, value):
-        if value != value.capitalize() and len(value) < 8:
+        if value != value.capitalize() or len(value) < 8:
             raise ValueError('Password must be atleast 8 characters long and contain a capital letter')
         return value
 
@@ -44,13 +44,15 @@ class Article(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
+    text = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
-    def __init__(self, title, user_id, category_id):
+    def __init__(self, title, text, user_id, category_id):
         self.title = title
+        self.text = text
         self.user_id = user_id
         self.category_id = category_id
 
