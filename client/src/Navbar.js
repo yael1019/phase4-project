@@ -1,0 +1,34 @@
+import React, { useRef } from 'react'
+import { FaBars, FaTimes } from 'react-icons/fa'
+
+function Navbar() {
+    const navRef = useRef();
+
+    // this is a toggle, when the button is clicked it adds/removes this classname so the buttons are not shown at the same time
+    const showNavbar = () => {
+        navRef.current.classList.toggle('responsive_nav')
+    }
+  return (
+    <div>
+        <header>
+            <h3>Logo</h3>
+            <nav ref={navRef}>
+                {/* change the active class when you have the paths */}
+                <a href='/#' className='active'>Home</a>
+                <a href='/#'>Category</a>
+                <a href='/#'>My Profile</a>
+                {/* this button is to close navbar on smaller screens */}
+                <button className='nav-btn nav-close-btn' onClick={showNavbar}>
+                    <FaTimes />
+                </button>
+            </nav>
+            {/* this button is to open navbar on smaller screens */}
+            <button className='nav-btn' onClick={showNavbar}>
+                <FaBars />
+            </button>
+        </header>
+    </div>
+  )
+}
+
+export default Navbar
