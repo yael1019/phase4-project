@@ -80,12 +80,18 @@ class Category(db.Model):
     __tablename__ = 'categories'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False, unique=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
     articles = db.relationship('Article', backref='category')
     users = association_proxy('articles', 'user')
+
+    @validates('name')
+    def validate(self, key, value):
+        if value == '':
+            raise ValueError('The name of the category can not be empty')
+        return value
 
     def __init__(self, name):
         self.name = name
@@ -97,5 +103,12 @@ class Category(db.Model):
         return {
             "id": self.id,
             "name": self.name
+        }
+
+    def to_dict_2(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "articles": [article.to_dict() for article in self.articles]
         }
 

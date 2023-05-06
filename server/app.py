@@ -120,5 +120,71 @@ def delete_articles(id):
     except:
         return {'Error': '404: Request not found'}, 404
 
+#! CATEGORY ROUTES
+
+@app.get('/categories')
+def get_categories():
+    try:
+        categories = Category.query.all()
+        return jsonify([category.to_dict() for category in categories]), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.get('/categories/<int:id>')
+def get_category(id):
+    try:
+        category = Category.query.get(id)
+        return jsonify(category.to_dict_2()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.post('/categories')
+def add_category():
+    try:
+        category = Category(**request.json)
+
+        categories = Category.query.all()
+        for cat in categories:
+            if cat.name == category.name:
+                return {'Error': '400: Invalid input'}, 400
+
+        db.session.add(category)
+        db.session.commit()
+        return jsonify(category.to_dict()), 201
+    except ValueError:
+        return {'Error': '400: Invalid input'}, 400
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.patch('/categories/<int:id>')
+def edit_category(id):
+    try:
+        data = request.json
+
+        categories = Category.query.all()
+        for cat in categories:
+            if cat.name == data['name']:
+                return {'Error': '400: Invalid input'}, 400
+        if data['name'] == '':
+            return {'Error': '400: Invalid input'}, 400
+
+        Category.query.where(Category.id==id).update(data)
+        category = Category.query.get(id)
+        db.session.commit()
+        return jsonify(category.to_dict()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.delete('/categories/<int:id>')
+def delete_category(id):
+    try:
+        category = Category.query.get(id)
+        category_name = category.name
+        db.session.delete(category)
+        db.session.commit()
+        return jsonify(f'{category_name} was successfully deleted'), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
 if __name__ == '__main__':
     app.run(port=3001, debug=True)
