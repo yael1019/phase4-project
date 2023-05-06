@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from config import Config
 from models import db #Add classes
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///development.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app, origins=['*'])
-app.config.from_Object(Config)
-db.init_app(app)
 migrate = Migrate(app, db)
+db.init_app(app)
 
 if __name__ == '__main__':
-    app.run(port=3001)
+    app.run(port=3001, debug=True)
