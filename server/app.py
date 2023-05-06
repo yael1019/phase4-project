@@ -10,5 +10,181 @@ CORS(app, origins=['*'])
 migrate = Migrate(app, db)
 db.init_app(app)
 
+#! USER ROUTES
+
+@app.get('/users')
+def get_users():
+    try:
+        users = User.query.all()
+        return jsonify([user.to_dict() for user in users]), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.get('/users/<int:id>')
+def get_user(id):
+    try:
+        user = User.query.get(id)
+        return jsonify(user.to_dict_2()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.post('/users')
+def add_user():
+    try:
+        user = User(**request.json)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(user.to_dict()), 201
+    except ValueError:
+        return {'Error': '400: Invalid input'}, 400
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.patch('/users/<int:id>')
+def edit_user(id):
+    try:
+        data = request.json
+
+        for key in data:
+            if key == 'password':
+                if data[key] != data[key].capitalize() or len(data[key]) < 8:
+                    return {'Error': '400: Invalid input'}, 400
+
+        User.query.where(User.id==id).update(data)
+        user = User.query.get(id)
+        db.session.commit()
+        return jsonify(user.to_dict()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.delete('/users/<int:id>')
+def delete_user(id):
+    try:
+        user = User.query.get(id)
+        user_name = user.name
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify(f'{user_name}\'s account was successfully deleted'), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+#! ARTICLE ROUTES
+
+@app.get('/articles')
+def get_articles():
+    try:
+        articles = Article.query.all()
+        return jsonify([article.to_dict() for article in articles]), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.get('/articles/<int:id>')
+def get_article(id):
+    try:
+        article = Article.query.get(id)
+        return jsonify(article.to_dict()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.post('/articles')
+def add_article():
+    try:
+        article = Article(**request.json)
+        db.session.add(article)
+        db.session.commit()
+        return jsonify(article.to_dict()), 201
+    except ValueError:
+        return {'Error': '400: Invalid input'}, 400
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.patch('/articles/<int:id>')
+def edit_article(id):
+    try:
+        data = request.json
+        Article.query.where(Article.id==id).update(data)
+        article = Article.query.get(id)
+        db.session.commit()
+        return jsonify(article.to_dict()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.delete('/articles/<int:id>')
+def delete_articles(id):
+    try:
+        article = Article.query.get(id)
+        article_title = article.title
+        db.session.delete(article)
+        db.session.commit()
+        return jsonify(f'{article_title} was successfully deleted'), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+#! CATEGORY ROUTES
+
+@app.get('/categories')
+def get_categories():
+    try:
+        categories = Category.query.all()
+        return jsonify([category.to_dict() for category in categories]), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.get('/categories/<int:id>')
+def get_category(id):
+    try:
+        category = Category.query.get(id)
+        return jsonify(category.to_dict_2()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.post('/categories')
+def add_category():
+    try:
+        category = Category(**request.json)
+
+        categories = Category.query.all()
+        for cat in categories:
+            if cat.name == category.name:
+                return {'Error': '400: Invalid input'}, 400
+
+        db.session.add(category)
+        db.session.commit()
+        return jsonify(category.to_dict()), 201
+    except ValueError:
+        return {'Error': '400: Invalid input'}, 400
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.patch('/categories/<int:id>')
+def edit_category(id):
+    try:
+        data = request.json
+
+        categories = Category.query.all()
+        for cat in categories:
+            if cat.name == data['name']:
+                return {'Error': '400: Invalid input'}, 400
+        if data['name'] == '':
+            return {'Error': '400: Invalid input'}, 400
+
+        Category.query.where(Category.id==id).update(data)
+        category = Category.query.get(id)
+        db.session.commit()
+        return jsonify(category.to_dict()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.delete('/categories/<int:id>')
+def delete_category(id):
+    try:
+        category = Category.query.get(id)
+        category_name = category.name
+        db.session.delete(category)
+        db.session.commit()
+        return jsonify(f'{category_name} was successfully deleted'), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
 if __name__ == '__main__':
     app.run(port=3001, debug=True)
