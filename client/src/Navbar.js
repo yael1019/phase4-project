@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
+import { NavLink } from 'react-router-dom'
 
 function Navbar() {
     const navRef = useRef();
@@ -13,10 +14,9 @@ function Navbar() {
         <header>
             <h3>Logo</h3>
             <nav ref={navRef}>
-                {/* change the active class when you have the paths */}
-                <a href='/#' className='active'>Home</a>
-                <a href='/#'>Category</a>
-                <a href='/#'>My Profile</a>
+                <NavLink to='/'>Home</NavLink>
+                <NavLink to='/categories'>Category</NavLink>
+                <NavLink to='/users'>My Profile</NavLink>
                 {/* this button is to close navbar on smaller screens */}
                 <button className='nav-btn nav-close-btn' onClick={showNavbar}>
                     <FaTimes />
