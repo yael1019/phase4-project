@@ -68,5 +68,57 @@ def delete_user(id):
     except:
         return {'Error': '404: Request not found'}, 404
 
+#! ARTICLE ROUTES
+
+@app.get('/articles')
+def get_articles():
+    try:
+        articles = Article.query.all()
+        return jsonify([article.to_dict() for article in articles]), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.get('/articles/<int:id>')
+def get_article(id):
+    try:
+        article = Article.query.get(id)
+        return jsonify(article.to_dict()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.post('/articles')
+def add_article():
+    try:
+        article = Article(**request.json)
+        db.session.add(article)
+        db.session.commit()
+        return jsonify(article.to_dict()), 201
+    except ValueError:
+        return {'Error': '400: Invalid input'}, 400
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.patch('/articles/<int:id>')
+def edit_article(id):
+    try:
+        data = request.json
+        Article.query.where(Article.id==id).update(data)
+        article = Article.query.get(id)
+        db.session.commit()
+        return jsonify(article.to_dict()), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
+@app.delete('/articles/<int:id>')
+def delete_articles(id):
+    try:
+        article = Article.query.get(id)
+        article_title = article.title
+        db.session.delete(article)
+        db.session.commit()
+        return jsonify(f'{article_title} was successfully deleted'), 200
+    except:
+        return {'Error': '404: Request not found'}, 404
+
 if __name__ == '__main__':
     app.run(port=3001, debug=True)

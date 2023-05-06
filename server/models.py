@@ -72,8 +72,8 @@ class Article(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "user_id": self.user_id,
-            "category_id": self.category_id
+            "user": self.user.name,
+            "category": self.category.name
         }
 
 class Category(db.Model):
