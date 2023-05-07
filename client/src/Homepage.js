@@ -1,10 +1,15 @@
 import React from 'react'
+import ArticlePage from './ArticlePage'
 
-function Homepage() {
+function Homepage({articles}) {
+    const mappedAtricles = articles.map(article => <ArticlePage key={article.id} article={article} />)
     return (
-        <dv>
-            <h1>Homepage</h1>
-        </dv>
+        <div>
+            <h1>Home</h1>
+            <div id='article-container'>
+            {mappedAtricles}
+            </div>
+        </div>
     )
 }
 

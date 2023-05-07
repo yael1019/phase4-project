@@ -22,11 +22,13 @@ code {
 }
 
 :root{
-  --mainColor: #29335C;
+  --mainColor: #29335c;
   --mainColorLight: #5767aa;
   --secondaryColor: #DB2B39;
   --textColor: #eee;
 }
+
+/* NAV CSS */
 
 header{
   display: flex;
@@ -110,3 +112,19 @@ header .nav-btn{
 }
 
 
+/* ARTICLE ROW CSS ON HOMEPAGE */
+
+#article-container{
+  display: flex;
+  flex-direction: column;
+  /* align-content: center; */
+  align-items: center;
+  gap: 5rem;
+}
+
+.article-row{
+  /* background-color: antiquewhite; */
+  /* padding: 0.5rem 10rem; */
+  border-top: 1px solid rgba(41, 51, 92, 0.3);
+  width: 55%;
+}
