@@ -1,5 +1,4 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask import Flask, request, jsonify, session
 from flask_migrate import Migrate
 from models import db, User, Article, Category
 
@@ -7,9 +6,10 @@ from models import db, User, Article, Category
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///development.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-CORS(app, origins=['*'])
 migrate = Migrate(app, db)
 db.init_app(app)
+
+app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
 
 #! USER ROUTES
 
@@ -35,6 +35,8 @@ def add_user():
         user = User(**request.json)
         db.session.add(user)
         db.session.commit()
+        session['user_id'] = user.id
+        print(user.id)
         return jsonify(user.to_dict()), 201
     except ValueError:
         return {'Error': '400: Invalid input'}, 400
