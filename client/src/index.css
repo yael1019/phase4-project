@@ -120,6 +120,7 @@ header .nav-btn{
   /* align-content: center; */
   align-items: center;
   gap: 5rem;
+  margin-top: 4rem;
 }
 
 .article-row{
