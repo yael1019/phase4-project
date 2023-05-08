@@ -18,6 +18,16 @@ function App() {
       .then(data => setArticles(data))
   }, [])
 
+  useEffect(() => {
+    fetch('/check_session')
+      .then(res => {
+        if (res.ok){
+          res.json()
+          .then(data => setCurrentUser(data))
+        }
+      })
+  }, [])
+
   function handleCreateAccount(form) {
     fetch('/users', {
       method: 'POST',
@@ -35,15 +45,42 @@ function App() {
       })
   }
 
+  function handleLogin(form) {
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify(form)
+    })
+    .then(res => {
+      if (res.ok) {
+      res.json()
+      .then(data => setCurrentUser(data))
+      } else {
+        res.json()
+        .then(data => alert(data.Message))
+      }
+    })
+  }
+
+  function handleLogout() {
+    fetch('/logout', {
+      method: 'DELETE'
+    })
+    setCurrentUser(null)
+  }
+
   return (
     <div>
-      <Navbar />
+      <Navbar handleLogout={handleLogout} />
       <Routes>
         <Route path='/' element={<Homepage articles={articles} currentUser={currentUser} />} />
         <Route path='/categories' element={<Category />} />
         {/* add /:id to the users so it takes you to the specific users page */}
         <Route path='/users' element={<Profile />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<Login handleLogin={handleLogin}/>} />
         <Route path='/createAccount' element={<CreateAccount handleCreateAccount={handleCreateAccount} />} />
         <Route path='*' element={<NoMatch />} />
       </Routes>

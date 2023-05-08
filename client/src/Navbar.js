@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-function Navbar() {
+function Navbar({handleLogout}) {
     const navRef = useRef();
     const navigate = useNavigate()
     const [loggedin, setLoggedin] = useState(false)
@@ -19,6 +19,7 @@ function Navbar() {
 
     function handleLogoutClick(){
         setLoggedin(!loggedin)
+        handleLogout()
     }
 
   return (

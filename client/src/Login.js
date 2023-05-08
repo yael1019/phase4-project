@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Login() {
+function Login({handleLogin}) {
     const [form, setForm] = useState({
         username: '',
         password: ''
@@ -17,7 +17,11 @@ function Login() {
 
     function handleSubmit(e) {
         e.preventDefault()
-
+        handleLogin(form)
+        setForm({
+            username: '',
+            password: ''
+        })
     }
 
   return (
