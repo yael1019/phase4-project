@@ -33,16 +33,21 @@ def seed_articles():
     for user in users:
         for _ in range(random.randint(2, 5)):
             title = fake.sentence()
-            text = fake.text()
+            for _ in range(100):
+                text = fake.paragraph(nb_sentences=100)
+            # text = fake.text()
             category = random.choice(categories)
             article = Article(title=title, text=text, user_id=user.id, category_id=category.id)
             db.session.add(article)
     db.session.commit()
 
 def clear_data():
-    db.session.execute('DELETE FROM users;')
-    db.session.execute('DELETE FROM categories;')
-    db.session.execute('DELETE FROM articles;')
+    # db.session.execute('DELETE FROM users;')
+    # db.session.execute('DELETE FROM categories;')
+    # db.session.execute('DELETE FROM articles;')
+    User.query.delete()
+    Article.query.delete()
+    Category.query.delete()
     db.session.commit()
 
 if __name__ == "__main__":
