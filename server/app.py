@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, session
 from flask_migrate import Migrate
 from models import db, User, Article, Category
+from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
@@ -8,8 +9,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///development.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 migrate = Migrate(app, db)
 db.init_app(app)
+bcrypt = B
 
 app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
+
+def auth():
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+    if not user:
+        return {'Error': 'Not logged in'}, 401
+    return user
 
 #! USER ROUTES
 
@@ -29,6 +38,11 @@ def get_user(id):
     except:
         return {'Error': '404: Request not found'}, 404
 
+@app.get('/check_session')
+def check_session():
+    user = auth()
+    return jsonify(user.to_dict()), 200
+
 @app.post('/users')
 def add_user():
     try:
@@ -36,12 +50,21 @@ def add_user():
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.id
-        print(user.id)
         return jsonify(user.to_dict()), 201
     except ValueError:
         return {'Error': '400: Invalid input'}, 400
     except:
         return {'Error': '404: Request not found'}, 404
+
+@app.post('/login')
+def login():
+    data = request.json
+    user = User.query.where(User.username == data['username']).first()
+    if user:
+        session['user_id'] = user.id
+        return user.to_dict(), 201
+    else:
+        return {'Message': "Invalid username or password"}, 401
 
 @app.patch('/users/<int:id>')
 def edit_user(id):
@@ -70,6 +93,11 @@ def delete_user(id):
         return jsonify(f'{user_name}\'s account was successfully deleted'), 200
     except:
         return {'Error': '404: Request not found'}, 404
+
+@app.delete('/logout')
+def logout():
+    session.pop('user_id')
+    return {}, 204
 
 #! ARTICLE ROUTES
 
