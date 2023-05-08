@@ -1,8 +1,8 @@
 import React from 'react'
-import ArticlePage from './ArticlePage'
+import HomepageCard from './HomepageCard'
 
 function Homepage({articles}) {
-    const mappedAtricles = articles.map(article => <ArticlePage key={article.id} article={article} />)
+    const mappedAtricles = articles.map(article => <HomepageCard key={article.id} article={article} />)
     return (
         <div>
             <div id='article-container'>
