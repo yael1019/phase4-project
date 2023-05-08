@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.associationproxy import association_proxy
 
+
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -37,6 +38,15 @@ class User(db.Model):
             "name": self.username,
             "username": self.username,
             "password": self.password
+        }
+    
+    def to_dict_2(self):
+        return {
+            "id": self.id,
+            "name": self.username,
+            "username": self.username,
+            "password": self.password,
+            "articles": [article.to_dict() for article in self.articles]
         }
 
 class Article(db.Model):
