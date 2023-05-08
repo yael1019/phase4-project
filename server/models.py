@@ -15,12 +15,12 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
-    articles = db.relationship('Article', backref='user', cascade='all, delete-orphan')
+    articles = db.relationship('Article', backref='user')
     categories = association_proxy('articles', 'category')
 
     @validates('password')
     def validate(self, key, value):
-        if value != value.capitalize() or len(value) < 8:
+        if value != value.capitalize() and len(value) < 8:
             raise ValueError('Password must be atleast 8 characters long and contain a capital letter')
         return value
 
@@ -48,20 +48,19 @@ class User(db.Model):
             "password": self.password,
             "articles": [article.to_dict() for article in self.articles]
         }
+
 class Article(db.Model):
     __tablename__ = 'articles'
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
-    text = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
-    def __init__(self, title, text, user_id, category_id):
+    def __init__(self, title, user_id, category_id):
         self.title = title
-        self.text = text
         self.user_id = user_id
         self.category_id = category_id
 
@@ -72,26 +71,20 @@ class Article(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "user": self.user.name,
-            "category": self.category.name
+            "user_id": self.user_id,
+            "category_id": self.category_id
         }
 
 class Category(db.Model):
     __tablename__ = 'categories'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False, unique=True)
+    name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
 
     articles = db.relationship('Article', backref='category')
     users = association_proxy('articles', 'user')
-
-    @validates('name')
-    def validate(self, key, value):
-        if value == '':
-            raise ValueError('The name of the category can not be empty')
-        return value
 
     def __init__(self, name):
         self.name = name
@@ -103,12 +96,5 @@ class Category(db.Model):
         return {
             "id": self.id,
             "name": self.name
-        }
-
-    def to_dict_2(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "articles": [article.to_dict() for article in self.articles]
         }
 
