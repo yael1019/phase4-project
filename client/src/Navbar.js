@@ -12,7 +12,7 @@ function Navbar() {
   return (
     <div>
         <header>
-            <h3>Logo</h3>
+            <h3>BlogBrew</h3>
             <nav ref={navRef}>
                 <NavLink to='/'>Home</NavLink>
                 <NavLink to='/categories'>Category</NavLink>
