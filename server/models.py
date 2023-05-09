@@ -35,7 +35,7 @@ class User(db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "name": self.username,
+            "name": self.name,
             "username": self.username,
             "password": self.password
         }
