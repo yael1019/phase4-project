@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import Homepage from './Homepage'
 import Navbar from './Navbar'
-import Category from './Category'
+import CategoryPage from './CategoryPage'
 import Profile from './Profile'
 import NoMatch from './NoMatch'
 import Login from './Login'
@@ -11,6 +11,8 @@ import ArticlePage from './ArticlePage'
 
 function App() {
   const [articles, setArticles] = useState([])
+  const [categories, setCategories] = useState([])
+  const [category, setCategory] = useState(null)
   const [currentUser, setCurrentUser] = useState(null)
   const navigate = useNavigate()
 
@@ -21,6 +23,11 @@ function App() {
   }, [])
 
   useEffect(() => {
+    fetch('/categories')
+      .then(resp => resp.json())
+      .then(data => setCategories(data))
+  }, [])
+
     fetch('/check_session')
       .then(res => {
         if (res.ok){
@@ -77,10 +84,10 @@ function App() {
 
   return (
     <div>
-      <Navbar handleLogout={handleLogout} />
+      <Navbar handleLogout={handleLogout} setCategory={setCategory}/>
       <Routes>
-        <Route path='/' element={<Homepage articles={articles} currentUser={currentUser} />} />
-        <Route path='/categories' element={<Category />} />
+        <Route path='/' element={<Homepage articles={articles} category={category}/>} />
+        <Route path='/categories' element={<CategoryPage categories={categories} setCategory={setCategory}/>} />
         {/* add /:id to the users so it takes you to the specific users page */}
         <Route path='/users' element={<Profile />} />
         <Route path='/login' element={<Login handleLogin={handleLogin}/>} />

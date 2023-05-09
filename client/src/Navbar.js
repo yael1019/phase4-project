@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-function Navbar({handleLogout}) {
+function Navbar({handleLogout, setCategory}) {
     const navRef = useRef();
     const navigate = useNavigate()
     const [loggedin, setLoggedin] = useState(false)
@@ -11,6 +11,9 @@ function Navbar({handleLogout}) {
     const showNavbar = () => {
         navRef.current.classList.toggle('responsive_nav')
     }
+
+    function handleClick(){
+        setCategory(null)
 
     function handleLoginClick() {
         setLoggedin(!loggedin)
@@ -26,9 +29,9 @@ function Navbar({handleLogout}) {
   return (
     <div>
         <header>
-            <h3>BlogBrew</h3>
+            <h3 id='BlogBrew-btn' onClick={handleClick}>BlogBrew</h3>
             <nav ref={navRef}>
-                <NavLink to='/'>Home</NavLink>
+                <NavLink onClick={handleClick} to='/'>Home</NavLink>
                 <NavLink to='/categories'>Category</NavLink>
                 <NavLink to='/users'>My Profile</NavLink>
                 {/* this button is to close navbar on smaller screens */}

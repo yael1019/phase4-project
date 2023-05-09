@@ -75,7 +75,8 @@ class Article(db.Model):
             "title": self.title,
             "user": self.user.name,
             "category": self.category.name,
-            "text": self.text
+            "text": self.text,
+            "category_id": self.category_id
         }
 
 class Category(db.Model):
