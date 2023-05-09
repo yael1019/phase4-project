@@ -88,6 +88,7 @@ header .nav-btn{
     background-color: var(--mainColor);
     transition: 1s;
     transform: translateY(-100vh);
+    z-index: 2;
   }
 
   header .responsive_nav{
@@ -137,4 +138,14 @@ header .nav-btn{
 
 #Category-Name-btn{
   cursor: pointer;
+}
+
+/* TEXT EDITOR */
+
+.editor {
+  margin: 2rem;
+}
+
+.ck-editor__editable_inline {
+  min-height: 500px;
 }
