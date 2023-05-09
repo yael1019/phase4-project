@@ -14,34 +14,34 @@ bcrypt = Bcrypt(app)
 app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
 
 def auth():
+    print('in auth')
     user_id = session['user_id']
     user = User.query.get(user_id)
+    print(user)
     if not user:
         return {'Error': 'Not logged in'}, 401
     return user
 
 #! USER ROUTES
 
-@app.get('/users')
-def get_users():
-    try:
-        users = User.query.all()
-        return jsonify([user.to_dict() for user in users]), 200
-    except:
-        return {'Error': '404: Request not found'}, 404
+# @app.get('/users')
+# def get_users():
+#     try:
+#         users = User.query.all()
+#         return jsonify([user.to_dict() for user in users]), 200
+#     except:
+#         return {'Error': '404: Request not found'}, 404
 
-@app.get('/users/<int:id>')
-def get_user(id):
-    try:
-        user = User.query.get(id)
-        return jsonify(user.to_dict_2()), 200
-    except:
-        return {'Error': '404: Request not found'}, 404
+# @app.get('/users/')
+# def get_user():
+#     print('in route')
+#     auth()
+#     return jsonify(user.to_dict_2()), 200
 
 @app.get('/check_session')
 def check_session():
     user = auth()
-    return jsonify(user.to_dict()), 200
+    return jsonify(user.to_dict_2()), 200
 
 @app.post('/users')
 def add_user():
@@ -69,7 +69,7 @@ def login():
     # import ipdb; ipdb.set_trace()
     if user and bcrypt.check_password_hash(user.password, data['password']):
         session['user_id'] = user.id
-        return user.to_dict(), 201
+        return user.to_dict_2(), 201
     else:
         return {'Message': "Invalid username or password"}, 401
 
@@ -115,6 +115,12 @@ def get_articles():
         return jsonify([article.to_dict() for article in articles]), 200
     except:
         return {'Error': '404: Request not found'}, 404
+
+# @app.get('/articles_auth')
+# def get_articles_auth():
+#     auth()
+#     articles = Article.query.all()
+#     return jsonify([article.to_dict() for article in articles]), 200
 
 @app.get('/articles/<int:id>')
 def get_article(id):
