@@ -7,6 +7,7 @@ import Profile from './Profile'
 import NoMatch from './NoMatch'
 import Login from './Login'
 import CreateAccount from './CreateAccount'
+import ArticlePage from './ArticlePage'
 
 function App() {
   const [articles, setArticles] = useState([])
@@ -84,6 +85,7 @@ function App() {
         <Route path='/users' element={<Profile />} />
         <Route path='/login' element={<Login handleLogin={handleLogin}/>} />
         <Route path='/createAccount' element={<CreateAccount handleCreateAccount={handleCreateAccount} />} />
+        <Route path='/article/:id' element={<ArticlePage articles={articles} />} /> 
         <Route path='*' element={<NoMatch />} />
       </Routes>
     </div>
