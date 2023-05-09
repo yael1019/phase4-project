@@ -14,6 +14,8 @@ function Navbar({handleLogout, setCategory}) {
 
     function handleClick(){
         setCategory(null)
+        navigate('/')
+    }
 
     function handleLoginClick() {
         setLoggedin(!loggedin)

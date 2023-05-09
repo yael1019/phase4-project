@@ -66,6 +66,7 @@ def add_user():
 def login():
     data = request.json
     user = User.query.where(User.username == data['username']).first()
+    # import ipdb; ipdb.set_trace()
     if user and bcrypt.check_password_hash(user.password, data['password']):
         session['user_id'] = user.id
         return user.to_dict(), 201

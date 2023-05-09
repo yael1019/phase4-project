@@ -28,6 +28,7 @@ function App() {
       .then(data => setCategories(data))
   }, [])
 
+  useEffect( () => {
     fetch('/check_session')
       .then(res => {
         if (res.ok){
@@ -86,7 +87,7 @@ function App() {
     <div>
       <Navbar handleLogout={handleLogout} setCategory={setCategory}/>
       <Routes>
-        <Route path='/' element={<Homepage articles={articles} category={category}/>} />
+        <Route path='/' element={<Homepage articles={articles} category={category} currentUser={currentUser}/>} />
         <Route path='/categories' element={<CategoryPage categories={categories} setCategory={setCategory}/>} />
         {/* add /:id to the users so it takes you to the specific users page */}
         <Route path='/users' element={<Profile />} />

@@ -1,22 +1,40 @@
 import random
 import string
-from app import app
+from app import app, bcrypt
 from models import db, User, Article, Category
 from faker import Faker
 
 fake = Faker()
+# app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
 
 def generate_password():
-    password = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
-    password += random.choice(string.ascii_uppercase)
-    return password
+    # password = ''.join(random.choice(string.ascii_lowercase) for _ in range(7))
+    # password += random.choice(string.ascii_uppercase)
+    passwords = [
+        'Kuqidgam',
+        'Wjzxaphr',
+        'Wbuguwcb',
+        'Sugwaydr',
+        'Spnqhbve',
+        'Ecpfebwz',
+        'Rjywzjjn',
+        'Lcyeuaza',
+        'Eicnvzaw',
+        'Ikuzqjpy'
+    ]
+    passwords_hash = []
+    for pas in passwords:
+        password_hash = bcrypt.generate_password_hash(pas).decode('utf-8')
+        print('creating password hash')
+        passwords_hash.append(password_hash)
+    return passwords_hash
 
 def seed_users():
-    for _ in range(10):
+    passwords = generate_password()
+    for i in range(10):
         name = fake.name()
-        username = fake.user_name()
-        password = generate_password().capitalize()
-        user = User(name=name, username=username, password=password)
+        username = fake.user_name() 
+        user = User(name=name, username=username, password=passwords[i])
         db.session.add(user)
     db.session.commit()
 
