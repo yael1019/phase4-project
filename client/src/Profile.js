@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-function Profile() {
+function Profile({ currentUser }) {
   return (
-    <div>Profile</div>
+    <div>
+      {
+        currentUser
+        ?
+        currentUser.name
+        :
+        'Log in'
+      }
+    </div>
   )
 }
 

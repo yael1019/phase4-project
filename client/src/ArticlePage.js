@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function ArticlePage() {
   const { id } = useParams();
   const [article, setArticle] = useState(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch(`/articles/${id}`)
@@ -19,9 +20,9 @@ function ArticlePage() {
           <h4>By: {article.user}</h4>
           <p>{article.text}</p>
         </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+      ) : 
+        navigate('/nomatch')
+      }
     </div>
   );
 }

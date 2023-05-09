@@ -85,12 +85,12 @@ function App() {
 
   return (
     <div>
-      <Navbar handleLogout={handleLogout} setCategory={setCategory}/>
+      <Navbar handleLogout={handleLogout} setCategory={setCategory} currentUser={currentUser}/>
       <Routes>
         <Route path='/' element={<Homepage articles={articles} category={category} currentUser={currentUser}/>} />
         <Route path='/categories' element={<CategoryPage categories={categories} setCategory={setCategory}/>} />
         {/* add /:id to the users so it takes you to the specific users page */}
-        <Route path='/users' element={<Profile />} />
+        <Route path='/users/' element={<Profile currentUser={currentUser}/>} />
         <Route path='/login' element={<Login handleLogin={handleLogin}/>} />
         <Route path='/createAccount' element={<CreateAccount handleCreateAccount={handleCreateAccount} />} />
         <Route path='/article/:id' element={<ArticlePage articles={articles} />} /> 
