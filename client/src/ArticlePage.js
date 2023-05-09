@@ -6,7 +6,7 @@ function ArticlePage() {
   const [article, setArticle] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/articles/${id}`)
+    fetch(`/articles/${id}`)
       .then(resp => resp.json())
       .then(data => setArticle(data));
   }, [id]);
