@@ -21,6 +21,12 @@ function Write({ currentUser, articles, setArticles }) {
     
     function handleSubmit(e) {
         e.preventDefault()
+        let joined;
+        if(Array.isArray(parse(text))) {
+            const arr = parse(text)
+            const strings = arr.map(str => str.props.children)
+            joined = strings.join('\n')
+        }
         fetch('/articles', {
             method: 'POST',
             headers: {
@@ -30,7 +36,7 @@ function Write({ currentUser, articles, setArticles }) {
             body: JSON.stringify({
                 ...form,
                 user_id: currentUser.id,
-                text: parse(text).props.children
+                text: joined
             })
         })
         .then(res => res.json())
