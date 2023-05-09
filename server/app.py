@@ -9,7 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///development.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 migrate = Migrate(app, db)
 db.init_app(app)
-bcrypt = B
+bcrypt = Bcrypt(app)
 
 app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
 
@@ -46,7 +46,13 @@ def check_session():
 @app.post('/users')
 def add_user():
     try:
-        user = User(**request.json)
+        data = request.json
+        password_hash = bcrypt.generate_password_hash(data['password']).decode('utf-8')
+        user = User(
+            name=data['name'],
+            username=data['username'],
+            password=password_hash
+        )
         db.session.add(user)
         db.session.commit()
         session['user_id'] = user.id
@@ -60,7 +66,7 @@ def add_user():
 def login():
     data = request.json
     user = User.query.where(User.username == data['username']).first()
-    if user:
+    if user and bcrypt.check_password_hash(user.password, data['password']):
         session['user_id'] = user.id
         return user.to_dict(), 201
     else:
