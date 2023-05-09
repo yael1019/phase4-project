@@ -1,14 +1,28 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
-function Navbar() {
+function Navbar({handleLogout}) {
     const navRef = useRef();
+    const navigate = useNavigate()
+    const [loggedin, setLoggedin] = useState(false)
 
     // this is a toggle, when the button is clicked it adds/removes this classname so the buttons are not shown at the same time
     const showNavbar = () => {
         navRef.current.classList.toggle('responsive_nav')
     }
+
+    function handleLoginClick() {
+        setLoggedin(!loggedin)
+        navigate('/login')
+    }
+
+    function handleLogoutClick(){
+        setLoggedin(!loggedin)
+        handleLogout()
+        navigate('/')
+    }
+
   return (
     <div>
         <header>
@@ -27,6 +41,13 @@ function Navbar() {
                 <FaBars />
             </button>
         </header>
+        {
+            loggedin
+            ?
+            <button id='login' onClick={handleLoginClick}>Login</button>
+            :
+            <button id='logout' onClick={handleLogoutClick}>Logout</button>
+        }
     </div>
   )
 }
