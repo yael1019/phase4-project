@@ -2,19 +2,24 @@ import React, { useRef } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 
-function Navbar() {
+function Navbar({setCategory}) {
     const navRef = useRef();
 
     // this is a toggle, when the button is clicked it adds/removes this classname so the buttons are not shown at the same time
     const showNavbar = () => {
         navRef.current.classList.toggle('responsive_nav')
     }
+
+    function handleClick(){
+        setCategory(null)
+    }
+
   return (
     <div>
         <header>
-            <h3>BlogBrew</h3>
+            <h3 id='BlogBrew-btn' onClick={handleClick}>BlogBrew</h3>
             <nav ref={navRef}>
-                <NavLink to='/'>Home</NavLink>
+                <NavLink onClick={handleClick} to='/'>Home</NavLink>
                 <NavLink to='/categories'>Category</NavLink>
                 <NavLink to='/users'>My Profile</NavLink>
                 {/* this button is to close navbar on smaller screens */}
