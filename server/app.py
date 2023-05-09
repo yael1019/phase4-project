@@ -132,15 +132,15 @@ def get_article(id):
 
 @app.post('/articles')
 def add_article():
-    try:
+    # try:
         article = Article(**request.json)
         db.session.add(article)
         db.session.commit()
         return jsonify(article.to_dict()), 201
-    except ValueError:
-        return {'Error': '400: Invalid input'}, 400
-    except:
-        return {'Error': '404: Request not found'}, 404
+    # except ValueError:
+    #     return {'Error': '400: Invalid input'}, 400
+    # except:
+    #     return {'Error': '404: Request not found'}, 404
 
 @app.patch('/articles/<int:id>')
 def edit_article(id):
