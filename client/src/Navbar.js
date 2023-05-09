@@ -20,6 +20,7 @@ function Navbar({handleLogout}) {
     function handleLogoutClick(){
         setLoggedin(!loggedin)
         handleLogout()
+        navigate('/')
     }
 
   return (

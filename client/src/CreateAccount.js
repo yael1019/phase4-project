@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function CreateAccount({handleCreateAccount}) {
     const [form, setForm] = useState({
@@ -6,6 +7,7 @@ function CreateAccount({handleCreateAccount}) {
         username: '',
         password: ''
     })
+    const navigate = useNavigate()
 
     function handleChange(e){
         setForm({
@@ -22,6 +24,7 @@ function CreateAccount({handleCreateAccount}) {
             username: '',
             password: ''
         })
+        navigate('/')
     }
 
   return (

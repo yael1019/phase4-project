@@ -11,6 +11,7 @@ import CreateAccount from './CreateAccount'
 function App() {
   const [articles, setArticles] = useState([])
   const [currentUser, setCurrentUser] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch('/articles')
@@ -58,6 +59,7 @@ function App() {
       if (res.ok) {
       res.json()
       .then(data => setCurrentUser(data))
+      navigate('/')
       } else {
         res.json()
         .then(data => alert(data.Message))
