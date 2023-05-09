@@ -37,7 +37,7 @@ function App() {
           .then(data => setCurrentUser(data))
         }
       })
-  }, [])
+  }, [articles])
 
   function handleCreateAccount(form) {
     fetch('/users', {
@@ -93,7 +93,7 @@ function App() {
         <Route path='/users/' element={<Profile currentUser={currentUser}/>} />
         <Route path='/login' element={<Login handleLogin={handleLogin}/>} />
         <Route path='/createAccount' element={<CreateAccount handleCreateAccount={handleCreateAccount} />} />
-        <Route path='/article/:id' element={<ArticlePage articles={articles} />} /> 
+        <Route path='/article/:id' element={<ArticlePage articles={articles} currentUser={currentUser} setArticles={setArticles}/>} /> 
         <Route path='/write' element={<Write currentUser={currentUser} articles={articles} setArticles={setArticles}/>}/>
         <Route path='*' element={<NoMatch />} />
       </Routes>
