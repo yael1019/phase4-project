@@ -1,0 +1,32 @@
+/* Homepage.css */
+
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    font-size: 2.5em;
+    color: #333;
+}
+
+#article-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* This will center the HomepageCard components */
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+@media (min-width: 768px) {
+    #article-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* This will center the HomepageCard components in larger screens */
+    }
+}
