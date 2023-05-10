@@ -14,10 +14,10 @@ bcrypt = Bcrypt(app)
 app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
 
 def auth():
-    print('in auth')
+    # print('in auth')
     user_id = session['user_id']
     user = User.query.get(user_id)
-    print(user)
+    # print(user)
     if not user:
         return {'Error': 'Not logged in'}, 401
     return user
@@ -112,7 +112,7 @@ def logout():
 def get_articles():
     try:
         articles = Article.query.all()
-        return jsonify([article.to_dict() for article in articles]), 200
+        return [article.to_dict() for article in articles], 200
     except:
         return {'Error': '404: Request not found'}, 404
 

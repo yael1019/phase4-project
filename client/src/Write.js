@@ -22,10 +22,14 @@ function Write({ currentUser, articles, setArticles }) {
     function handleSubmit(e) {
         e.preventDefault()
         let joined;
+        // console.log(text)
+        // console.log(parse(text))
         if(Array.isArray(parse(text))) {
             const arr = parse(text)
             const strings = arr.map(str => str.props.children)
             joined = strings.join('\n')
+        } else {
+            joined = parse(text).props.children
         }
         fetch('/articles', {
             method: 'POST',

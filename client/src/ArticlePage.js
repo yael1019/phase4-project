@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ArticlePara from './ArticlePara';
 
 function ArticlePage({ currentUser, articles, setArticles }) {
   const { id } = useParams();
@@ -12,7 +13,7 @@ function ArticlePage({ currentUser, articles, setArticles }) {
       .then(data => setArticle(data));
   }, [id]);
 
-  function handleClick(){
+  function handleClick() {
     console.log('Delete')
     fetch(`/articles/${id}`, {
       method: 'DELETE'
@@ -23,6 +24,7 @@ function ArticlePage({ currentUser, articles, setArticles }) {
     console.log(id)
     setArticles(newArticles)
   }
+
 
   return (
     <div>
@@ -35,17 +37,25 @@ function ArticlePage({ currentUser, articles, setArticles }) {
                 <div>
                   <h2>{article.title}</h2>
                   <h4>By: {article.user}</h4>
-                  <p>{article.text}</p>
+                  <div>
+                    { 
+                      article && (
+                        article.text.split('\n').map(para => {
+                          return <ArticlePara para={para}/>
+                        })
+                      )
+                    }
+                  </div>
                   <button onClick={handleClick}>Delete Article</button>
                 </div>
               )
               :
               (
-              <div>
-                <h2>{article.title}</h2>
-                <h4>By: {article.user}</h4>
-                <p>{article.text}</p>
-              </div>
+                <div>
+                  <h2>{article.title}</h2>
+                  <h4>By: {article.user}</h4>
+                  <p>{article.text}</p>
+                </div>
               )
           }
         </div>
