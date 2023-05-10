@@ -6,7 +6,8 @@ function Profile({ currentUser }) {
   const navigate = useNavigate()
   if(currentUser){
   // console.log(currentUser, currentUser.articles)
-  const articles = currentUser.articles
+  let articles = currentUser.articles
+  if(!articles) articles = []
   const mappedArticles = articles.map(article => <HomepageCard key={article.id} article={article}/>)
   return (
     <div>
