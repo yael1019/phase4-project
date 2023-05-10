@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import './ArticlePage.css';
+
 
 function ArticlePage({ currentUser, articles, setArticles }) {
   const { id } = useParams();
@@ -25,43 +27,33 @@ function ArticlePage({ currentUser, articles, setArticles }) {
   }
 
   return (
-    <div>
-      {article ? (
-        <div>
-          {
-            article.user === currentUser?.name
-              ?
-              (
-                <div>
-                  <h2>{article.title}</h2>
-                  <h4>By: {article.user}</h4>
-                  <p>{article.text}</p>
-                  <button onClick={handleClick}>Delete Article</button>
-                </div>
-              )
-              :
-              (
-              <div>
-                <h2>{article.title}</h2>
-                <h4>By: {article.user}</h4>
-                <p>{article.text}</p>
-              </div>
-              )
-          }
-        </div>
-      ) :
-        navigate('/nomatch')
-      }
-
-
-
-
-
-
-
-
+    <div className='article-container'>
+        {article ? (
+            <div>
+                {
+                    article.user === currentUser?.name
+                        ?
+                        (
+                            <div>
+                                <h2>{article.title}</h2>
+                                <h4>By: {article.user}</h4>
+                                <p>{article.text}</p>
+                                <button className='article-button' onClick={handleClick}>Delete Article</button>
+                            </div>
+                        )
+                        :
+                        (
+                            <div>
+                                <h2>{article.title}</h2>
+                                <h4>By: {article.user}</h4>
+                                <p>{article.text}</p>
+                            </div>
+                        )
+                }
+            </div>
+        ) : navigate('/nomatch')}
     </div>
-  );
+);
 }
 
 export default ArticlePage;
