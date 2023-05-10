@@ -1,5 +1,6 @@
 import React from 'react'
 import HomepageCard from './HomepageCard'
+import './Homepage.css'
 
 function Homepage({articles, currentUser, category}) {
     const filterArticles = articles.filter(article => article.category_id === category || category === null)

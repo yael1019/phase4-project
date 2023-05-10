@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ArticlePara from './ArticlePara';
+import './ArticlePage.css';
+
 
 function ArticlePage({ currentUser, articles, setArticles }) {
   const { id } = useParams();
@@ -27,7 +29,7 @@ function ArticlePage({ currentUser, articles, setArticles }) {
 
 
   return (
-    <div>
+    <div className='article-container'>
       {article ? (
         <div>
           {
@@ -46,7 +48,7 @@ function ArticlePage({ currentUser, articles, setArticles }) {
                       )
                     }
                   </div>
-                  <button onClick={handleClick}>Delete Article</button>
+                  <button className='article-button' onClick={handleClick}>Delete Article</button>
                 </div>
               )
               :
@@ -70,16 +72,8 @@ function ArticlePage({ currentUser, articles, setArticles }) {
       ) :
         navigate('/nomatch')
       }
-
-
-
-
-
-
-
-
     </div>
-  );
+);
 }
 
 export default ArticlePage;

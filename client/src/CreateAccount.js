@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './CreateAccount.css'
 
 function CreateAccount({handleCreateAccount}) {
     const [form, setForm] = useState({
