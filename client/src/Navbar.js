@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { NavLink, useNavigate } from 'react-router-dom'
+import './Navbar.css'
 
 function Navbar({ handleLogout, setCategory, currentUser }) {
     const navRef = useRef();

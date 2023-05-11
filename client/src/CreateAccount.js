@@ -28,8 +28,8 @@ function CreateAccount({handleCreateAccount}) {
         navigate('/')
     }
 
-  return (
-    <div>
+return (
+    <div className='create-account-form'>
         <h1>Create an Account</h1>
         <form onSubmit={handleSubmit}>
             <input name='name' type='text' placeholder='Enter your full name' value={form.name} onChange={handleChange}/>
@@ -38,7 +38,7 @@ function CreateAccount({handleCreateAccount}) {
             <input type='submit' />
         </form>
     </div>
-  )
+)
 }
 
 export default CreateAccount

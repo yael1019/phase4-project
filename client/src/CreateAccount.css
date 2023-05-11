@@ -1,0 +1,47 @@
+.create-account-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+}
+
+.create-account-form h1 {
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #333;
+}
+
+.create-account-form form {
+    display: flex;
+    flex-direction: column;
+    /* This makes the input fields stack vertically */
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+}
+
+.create-account-form input[type='text'],
+.create-account-form input[type='password'] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.create-account-form input[type='submit'] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.create-account-form input[type='submit']:hover {
+    background-color: #0056b3;
+}

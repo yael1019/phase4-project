@@ -1,0 +1,29 @@
+.article-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 15px;
+    padding: 10px;
+    height: 200px;
+    /* adjust this value as needed */
+    transition: all 0.3s ease;
+}
+
+.article-row:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.category-name {
+    font-size: 1.5em;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    /* optional: add a shadow for better legibility */
+}

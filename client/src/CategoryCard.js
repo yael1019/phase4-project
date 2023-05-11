@@ -1,8 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import './CategoryCard.css'
 
 function CategoryCard({categoryProp, setCategory}) {
-
     const navigate = useNavigate()
 
     function handleClick() {
@@ -10,11 +10,15 @@ function CategoryCard({categoryProp, setCategory}) {
         navigate("/")
     }
     
-  return (
-    <div className='article-row'>
-        <h2 id='Category-Name-btn' onClick={handleClick}>{categoryProp.name}</h2>
-    </div>
-  )
+    return (
+        <div 
+            className='article-row' 
+            onClick={handleClick} 
+            style={{ backgroundImage: `url(${categoryProp.imageUrl})` }}
+        >
+            <div className='category-name'>{categoryProp.name}</div>
+        </div>
+    )
 }
 
 export default CategoryCard
