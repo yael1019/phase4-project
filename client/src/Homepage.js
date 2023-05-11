@@ -7,7 +7,7 @@ function Homepage({articles, currentUser, category}) {
     const mappedArticles = filterArticles.map(article => <HomepageCard key={article.id} article={article} />)
     return (
         <div>
-            <h1>Welcome {currentUser ? currentUser.name : ''}</h1>
+            <h1 className='welcome'>Welcome {currentUser ? currentUser.name : ''}</h1>
             <div id='article-container'>
             {mappedArticles}
             </div>
