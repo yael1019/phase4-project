@@ -57,6 +57,7 @@ function Write({ currentUser, articles, setArticles }) {
     return (
         <div>
             <form className='editor' onSubmit={handleSubmit}>
+                <button id='publish-btn'>Publish</button>
                 <input name='title' type='text' placeholder='Enter title' value={form.title} onChange={handleChange}/>
                 {/* <label for='category'>Choose a Category</label> */}
                 <select name='category_id' id='category' value={form.category_id} onChange={handleChange}>
@@ -77,7 +78,6 @@ function Write({ currentUser, articles, setArticles }) {
                     }}
                     name='text'
                 />
-                <button>Publish</button>
             </form>
             {/* <div>
                 <h2>Content</h2>
