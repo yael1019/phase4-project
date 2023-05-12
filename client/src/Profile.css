@@ -18,14 +18,14 @@
     left: 50%;
 }
 .profile-container button {
-    width: 200px;
-    height: 60px;
+    width: 100px;
+    height: 45px;
     border: none;
-    border-radius: 20px;
+    border-radius: 15px;
     /* change this to a smaller percentage or a fixed pixel size */
     background-color: #007BFF;
     color: #fff;
-    font-size: 30px;
+    font-size: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 10px 30px 15px rgba(0, 0, 0, 0.2);
@@ -37,7 +37,7 @@
     /* you need to specify the position as absolute or relative to use top and left */
     top: 30px;
     left: 50%;
-    transform: translate(-50%, 700%);
+    transform: translate(600%, 140%);
     /* this will center your button */
 }
 
@@ -47,7 +47,15 @@
     /* increase the shadow effect on hover */
 }
 
-.profile-container button:active {
+/* .profile-container button:active {
     background-color: #004085;
     transform: scale(0.95);
+} */
+
+.write-btn{
+    margin-top: 1px;
+    margin-right: 2px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
