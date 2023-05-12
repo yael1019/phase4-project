@@ -19,6 +19,11 @@ function CreateAccount({handleCreateAccount}) {
 
     function handleSubmit(e){
         e.preventDefault()
+        const cap = form.password[0].toUpperCase() + form.password.slice(1)
+        if (form.password !== cap || form.password.length < 8) {
+            alert('Password must be capitalized and at least 8 characters long')
+            return null
+        }
         handleCreateAccount(form)
         setForm({
             name: '',
