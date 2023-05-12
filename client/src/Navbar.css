@@ -60,6 +60,24 @@
     background: #0056b3;
 }
 
+
+#publish-btn {
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    right: 0;
+    position: absolute;
+    top: 9vh;
+    margin: 2rem;
+}
+#publish-btn:hover {
+    background: #0056b3;
+}
+
 /* @media (max-width: 768px) {
     nav {
         position: fixed;

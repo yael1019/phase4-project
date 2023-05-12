@@ -26,14 +26,14 @@ function Login({handleLogin}) {
     }
 
   return (
-    <div>
+    <div className='login-form'>
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
             <input name='username' type='text' placeholder='Enter username' value={ form.username } onChange={ handleChange }/>
             <input name='password' type='password' placeholder='Enter password' value={form.password} onChange={ handleChange }/>
             <input type='submit'/>
         </form>
-        <button onClick={() => navigate('/createAccount')}>Create an account</button>
+        <button id='create-acct-btn' onClick={() => navigate('/createAccount')}>Create an account</button>
     </div>
   )
 }
