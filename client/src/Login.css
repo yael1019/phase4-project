@@ -47,7 +47,8 @@
 }
 
 #create-acct-btn {
-    width: 18%;
+    /* width: 20.5%; */
+    width: 19rem;
     padding: 10px;
     border: none;
     border-radius: 5px;
